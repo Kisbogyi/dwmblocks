@@ -35,7 +35,7 @@ void setupsignals();
 void sighandler(int signum);
 int getstatus(char *str, char *last);
 void statusloop();
-void termhandler(int _dev_null);
+void termhandler(int _a);
 void pstdout();
 #ifndef NO_X
 void setroot();
@@ -128,13 +128,13 @@ void setupsignals()
 
 	struct sigaction sa;
 	for (unsigned int i = 0; i < LENGTH(blocks); i++) {
-		if (blocks[i].signal > 0) {
-			signal(SIGMINUS+blocks[i].signal, sighandler);
-			sigaddset(&sa.sa_mask, SIGRTMIN+blocks[i].signal); // ignore signal when handling SIGUSR1
-		}
+		// if (blocks[i].signal > 0) {
+		// 	signal(SIGMINUS+blocks[i].signal, sighandler);
+		// 	sigaddset(&sa.sa_mask, SIGRTMIN+blocks[i].signal); // ignore signal when handling SIGUSR1
+		// }
 	sa.sa_sigaction = buttonhandler;
 	sa.sa_flags = SA_SIGINFO;
-	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGRTMIN+blocks[i].signal, &sa, NULL);
 	}
 
 }
@@ -204,7 +204,7 @@ void dummysighandler(int signum)
 void buttonhandler(int sig, siginfo_t *si, void *ucontext)
 {
 	*button = '0' + si->si_value.sival_int & 0xff;
-	getsigcmds(si->si_value.sival_int >> 8);
+	getsigcmds(sig - SIGRTMIN);
 	writestatus();
 }
 #endif
@@ -215,7 +215,7 @@ void sighandler(int signum)
 	writestatus();
 }
 
-void termhandler(int _dev_null)
+void termhandler(int _a)
 {
 	statusContinue = 0;
 }
