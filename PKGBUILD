@@ -5,7 +5,7 @@
 # Contributor: Grigorios Bouzakis <grbzks@gmail.com>
 
 pkgname=dwmblocks_custom
-pkgver=6.5.2
+pkgver=6.5.4
 pkgrel=1
 pkgdesc="bar for dwm"
 url="https://github.com/Kisbogyi/dwmblocks"
