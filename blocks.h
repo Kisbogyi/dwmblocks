@@ -1,6 +1,7 @@
 //Modify this file to change what commands output to your statusbar, and recompile using the make command.
 static const Block blocks[] = {
     /*Icon*/	/*Command*/											/*Update Interval*/	/*Update Signal*/
+    {"",		"button-test",								10,	0},
     {" ",		"brightnessctl -m | awk -F , '{print $4}'",						10,	0},
     {"  ",		"setxkbmap -query | grep layout | sed 's/layout: *//g'",				120,	0},
     {" ",		"df -h / | awk 'NR==2 {printf \"Porn folder: %dG/%dG\", $3, $2}'",			120,	0},
